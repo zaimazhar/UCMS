@@ -1,0 +1,22 @@
+extend layout.pug 
+
+block content 
+    div.text-3xl.text-center.m-3 
+        if !user
+            p= 'Login'
+    div(class=['flex', 'items-center', 'justify-center'])
+        if user
+            p= "Already Logged In"
+        else
+            form(class=['bg-white', 'shadow-md', 'rounded', 'p-10', 'w-4/6']) 
+                div 
+                    label(class=['block', 'my-3', 'text-gray-700', 'text-sm', 'font-bold'], for='email')= 'Email'
+                    input(type="email", id="email", class=['appearance-none', 'leading-tight','bg-gray-100', 'py-2', 'px-2', 'border-2', 'border-gray-500', 'rounded', 'focus:bg-white', 'focus:outline-none', 'focus:border-green-500', 'transition'], placeholder="Email")
+                div 
+                    label(class=['block', 'my-3', 'text-gray-700', 'text-sm', 'font-bold'], for='password')= 'Password'
+                    input(type="password", id="password", class=['appearance-none', 'leading-tight','bg-gray-100', 'py-2', 'px-2', 'border-2', 'border-gray-500', 'rounded', 'focus:bg-white', 'focus:outline-none', 'focus:border-green-500', 'transition'], placeholder='Password')
+                div.py-3
+                    button(class=['bg-green-500', 'py-2', 'px-4', 'rounded', 'hover:bg-green-400', 'transition'], type="submit")= 'Login'
+
+block includeScript 
+    script(src="home.js", defer) 

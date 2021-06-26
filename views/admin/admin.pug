@@ -1,0 +1,29 @@
+extend ../layout.pug
+
+block content 
+    input(type="hidden", id="uid")
+    p.text-2xl= title
+    .content 
+        p= `${name} has just logged in!`
+    ul 
+        each val in users 
+            li
+                a(href=`/user/${val.uid}`)
+                    .grid.grid-cols-3 
+                        col-span-1
+                            p= `${val.uid}`
+                        col-span-1
+                            p= `${val.displayName}`
+                        col-span-1
+                            p= `${val.customClaims}`
+    .bg-black.m-3.p-3
+        form(method="post") 
+            input(type="text", id="userName")
+            input(type="text", id="userEmail")
+            input(type="text", id="userPassword")
+            button(type="submit")= "Submit"
+    
+
+block includeScript 
+    script(src="admin-fe.js", defer) 
+
