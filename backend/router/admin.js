@@ -34,6 +34,7 @@ router.use(checkAuth)
 router.get('/', async (req, res) => {
     const user = res.locals.user
     const users =await getAllUser()
+    users.map(use => console.log(use.customClaims))
     res.render('admin/admin', { 
         title: 'UCMS Admin',
         users: users,
@@ -67,11 +68,11 @@ router.post('/role', async (req, res) => {
 
 router.get('/user', async (req, res) => {    
     const user = {
-        email: 'aablowmeaway@gmail.com',
+        email: 'coczerscoc@gmail.com',
         emailVerified: false,
-        phoneNumber: '+601164134713',
+        phoneNumber: '+601164134712',
         password: 'zaimzaim1',
-        displayName: 'Zaim Student',
+        displayName: 'Zaim Student 2',
         disabled: false,
     }
     const createdUser = await firebase.auth().createUser(user)

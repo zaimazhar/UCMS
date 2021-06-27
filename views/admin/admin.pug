@@ -22,12 +22,13 @@ block content
                                     .col-span-1
                                         p= `${val.displayName}`
                                     .col-span-1
-                                        if val.customClaims.admin
-                                            p= "Administrator"
-                                        else if val.customClaims.student
-                                            p= "Student"
+                                        if(val.customClaims)
+                                            if val.customClaims.admin
+                                                p= "Administrator"
+                                            else
+                                                p= "Student"
                                         else
-                                            p= `No Role`
+                                            p= "No Role"
         div(class=['flex', 'items-center', 'justify-center', 'my-10'])
             form(method='POST', class=['bg-white', 'shadow-md', 'rounded', 'p-10']) 
                 div 
