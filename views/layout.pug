@@ -1,18 +1,18 @@
 doctype html
 html(lang="en")
     head
-        title= title
+        title= `UCMS - ${title}`
         meta(charset="UTF-8")
         meta(http-equiv="X-UA-Compatible", content="IE=edge")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        link(rel="stylesheet", href="style.css")
+        link(rel="stylesheet", href="/style.css")
         script(src="https://www.gstatic.com/firebasejs/8.6.7/firebase-app.js")
         script(src="https://www.gstatic.com/firebasejs/8.6.7/firebase-auth.js") 
-        script(src="script.js" defer) 
+        script(src="/script.js" defer) 
     body.bg-gray-700
         div.container.mx-auto.px-4.m-4
             .bg-gray-300.rounded-md.my-4.flex.items-center.justify-center.py-5
-                img(src="logo.png", alt="", width="600px")
+                img(src="/logo.png", alt="", width="600px")
             if user.uid
                 nav.bg-white.shadow
                     .container.flex

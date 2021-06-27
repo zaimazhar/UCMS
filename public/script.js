@@ -38,8 +38,12 @@ async function signInUSer(email, password) {
 }
 
 async function giveRole(uid, role) {
-  return fetch('/roles', {
+  return fetch('/admin/role', {
     method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
     body: JSON.stringify({uid, role})
   })
 }

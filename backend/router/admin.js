@@ -18,6 +18,7 @@ const checkAuth = async (req, res, next) => {
         res.redirect('/')
     } else {
         const user = await getUser(req.cookies.session)
+        res.locals.user = user
         if(user.admin) {
             res.locals.user = user
             next()
@@ -26,7 +27,6 @@ const checkAuth = async (req, res, next) => {
             res.redirect('/')
         }
     }
-
 }
 
 router.use(checkAuth)
@@ -37,29 +37,46 @@ router.get('/', async (req, res) => {
     res.render('admin/admin', { 
         title: 'UCMS Admin',
         users: users,
-        name: `${user.name}`,
+        name: user.name,
         user
     })
-    console.log("ADMIN !!!!")
 })
 
-router.get('/auth', (req, res) => {
-    res.render('admin/admin', { 
-        title: 'UCMS Admin',
-        name: req.query.name
+router.get('/:uid/user', async (req, res) => {
+    const user = res.locals.user
+    const userProfile = await firebase.auth().getUser(req.params.uid)
+    res.render('admin/userprofile', {
+        title: `User: ${req.params.uid}`,
+        user,
+        userProfile,
     })
-    console.log("ADMIN !!!!")
 })
 
-router.post('/permission', (req, res) => {
+router.post('/role', async (req, res) => { 
+    const { uid, role } = req.body
+    const giveRole = role === 'admin' ? { admin: true } : { student: true }
     
+    await firebase.auth().setCustomUserClaims(uid, giveRole)
+
+    console.log(uid)
+    console.log(role)
+    firebase.auth().getUser(uid).then( user => {
+        console.log(user)
+    }).catch( err => console.log(err))
 })
 
-router.post('/roles', async (req,res) => {    
-    const uid = req.body.uid
-    const role = req.body.role
-    const success = await firebase.auth().setCustomUserClaims(uid, { role })
-    console.log(success)
+router.get('/user', async (req, res) => {    
+    const user = {
+        email: 'aablowmeaway@gmail.com',
+        emailVerified: false,
+        phoneNumber: '+601164134713',
+        password: 'zaimzaim1',
+        displayName: 'Zaim Student',
+        disabled: false,
+    }
+    const createdUser = await firebase.auth().createUser(user)
+
+    console.log(createdUser)
 })
 
 module.exports = router

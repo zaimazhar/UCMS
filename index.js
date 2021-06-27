@@ -1,6 +1,7 @@
 const express = require('express')
 const jwt = require('express-jwt')
 const cookieParser = require('cookie-parser')
+const path = require('path')
 
 const page = require('./backend/services/page')
 const firebase = require('firebase-admin')
@@ -18,7 +19,7 @@ firebase.initializeApp({
 });
 
 // Application Configuration
-app.use(express.static('public'))
+app.use(express.static(path.join(__dirname, 'public')))
 app.use(cookieParser())
 app.use(express.json())
 
@@ -46,7 +47,7 @@ const authorize = async (req, res, next) => {
 
 // Rendering Engine Initialization
 app.set('view engine', 'pug')
-app.set('views', __dirname + '/views')
+app.set('views', path.join(__dirname + '/views'))
 
 // Sub-Routes
 app.use('/admin', admin)

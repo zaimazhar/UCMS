@@ -2,28 +2,50 @@ extend ../layout.pug
 
 block content 
     input(type="hidden", id="uid")
-    p.text-2xl= title
-    .content 
-        p= `${name} has just logged in!`
-    ul 
-        each val in users 
-            li
-                a(href=`/user/${val.uid}`)
-                    .grid.grid-cols-3 
-                        col-span-1
-                            p= `${val.uid}`
-                        col-span-1
-                            p= `${val.displayName}`
-                        col-span-1
-                            p= `${val.customClaims}`
-    .bg-black.m-3.p-3
-        form(method="post") 
-            input(type="text", id="userName")
-            input(type="text", id="userEmail")
-            input(type="text", id="userPassword")
-            button(type="submit")= "Submit"
+    div(class=['grid', 'grid-cols-2', 'place-content-center', 'justify-items-center', 'my-10'])
+        .bg-white.shadow-md.rounded.p-4
+            ul 
+                li 
+                    .grid.grid-cols-4.p-3.justify-items-center
+                        .col-span-2
+                            p.font-bold= 'User ID'
+                        .col-span-1 
+                            p.font-bold= 'Username'
+                        .col-span-1
+                            p.font-bold= 'Role'
+                    each val in users 
+                        li.my-3
+                            a(href=`/admin/${val.uid}/user`)
+                                .grid.grid-cols-4.p-3.justify-items-center.text-blue-500
+                                    .col-span-2
+                                        p= `${val.uid}`
+                                    .col-span-1
+                                        p= `${val.displayName}`
+                                    .col-span-1
+                                        if val.customClaims.admin
+                                            p= "Administrator"
+                                        else if val.customClaims.student
+                                            p= "Student"
+                                        else
+                                            p= `No Role`
+        div(class=['flex', 'items-center', 'justify-center', 'my-10'])
+            form(method='POST', class=['bg-white', 'shadow-md', 'rounded', 'p-10']) 
+                div 
+                    label(class=['block', 'my-3', 'text-gray-700', 'text-sm', 'font-bold'], for='email')= 'Email'
+                    input(type="email", id="email", class=['appearance-none', 'leading-tight','bg-gray-100', 'py-2', 'px-2', 'border-2', 'border-gray-500', 'rounded', 'focus:bg-white', 'focus:outline-none', 'focus:border-green-500', 'transition'], placeholder="Email")
+                div 
+                    label(class=['block', 'my-3', 'text-gray-700', 'text-sm', 'font-bold'], for='password')= 'Password'
+                    input(type="password", id="password", class=['appearance-none', 'leading-tight','bg-gray-100', 'py-2', 'px-2', 'border-2', 'border-gray-500', 'rounded', 'focus:bg-white', 'focus:outline-none', 'focus:border-green-500', 'transition'], placeholder='Password')
+                div 
+                    label(class=['block', 'my-3', 'text-gray-700', 'text-sm', 'font-bold'], for='displayname')= 'Name'
+                    input(type="text", id="displayname", class=['appearance-none', 'leading-tight','bg-gray-100', 'py-2', 'px-2', 'border-2', 'border-gray-500', 'rounded', 'focus:bg-white', 'focus:outline-none', 'focus:border-green-500', 'transition'], placeholder='Name')
+                div 
+                    label(class=['block', 'my-3', 'text-gray-700', 'text-sm', 'font-bold'], for='displayname')= 'Phone No'
+                    input(type="text", id="displayname", class=['appearance-none', 'leading-tight','bg-gray-100', 'py-2', 'px-2', 'border-2', 'border-gray-500', 'rounded', 'focus:bg-white', 'focus:outline-none', 'focus:border-green-500', 'transition'], placeholder='Name')
+                div.py-3.text-center
+                    button(class=['bg-green-500', 'py-2', 'px-4', 'rounded', 'hover:bg-green-400', 'transition'], type="submit")= 'Register'
     
 
 block includeScript 
-    script(src="admin-fe.js", defer) 
+    script(src="/admin-fe.js", defer) 
 
