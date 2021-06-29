@@ -38,12 +38,23 @@ async function signInUSer(email, password) {
 }
 
 async function giveRole(uid, role) {
-  return fetch('/admin/role', {
+  fetch('/admin/role', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({uid, role})
-  })
+  }).then( claim => window.location.assign('/admin'))
+}
+
+async function createUser(userData) {
+  fetch('/admin/user', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(userData)
+  }).then( user => { window.location.assign('/admin') })
 }

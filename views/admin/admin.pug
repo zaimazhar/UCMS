@@ -31,7 +31,8 @@ block content
                                             p= "No Role"
         div(class=['flex', 'items-center', 'justify-center', 'my-10'])
             form(method='POST', class=['bg-white', 'shadow-md', 'rounded', 'p-10']) 
-                div 
+                p.text-xl.font-bold.mb-4= "Register New User"
+                div.mt-3
                     label(class=['block', 'my-3', 'text-gray-700', 'text-sm', 'font-bold'], for='email')= 'Email'
                     input(type="email", id="email", class=['appearance-none', 'leading-tight','bg-gray-100', 'py-2', 'px-2', 'border-2', 'border-gray-500', 'rounded', 'focus:bg-white', 'focus:outline-none', 'focus:border-green-500', 'transition'], placeholder="Email")
                 div 
@@ -41,11 +42,13 @@ block content
                     label(class=['block', 'my-3', 'text-gray-700', 'text-sm', 'font-bold'], for='displayname')= 'Name'
                     input(type="text", id="displayname", class=['appearance-none', 'leading-tight','bg-gray-100', 'py-2', 'px-2', 'border-2', 'border-gray-500', 'rounded', 'focus:bg-white', 'focus:outline-none', 'focus:border-green-500', 'transition'], placeholder='Name')
                 div 
-                    label(class=['block', 'my-3', 'text-gray-700', 'text-sm', 'font-bold'], for='displayname')= 'Phone No'
-                    input(type="text", id="displayname", class=['appearance-none', 'leading-tight','bg-gray-100', 'py-2', 'px-2', 'border-2', 'border-gray-500', 'rounded', 'focus:bg-white', 'focus:outline-none', 'focus:border-green-500', 'transition'], placeholder='Name')
+                    label(class=['block', 'my-3', 'text-gray-700', 'text-sm', 'font-bold'], for='phone')= 'Phone No'
+                    input(type="text", id="phone", class=['appearance-none', 'leading-tight','bg-gray-100', 'py-2', 'px-2', 'border-2', 'border-gray-500', 'rounded', 'focus:bg-white', 'focus:outline-none', 'focus:border-green-500', 'transition'], placeholder='+60123456789')
                 div.py-3.text-center
-                    button(class=['bg-green-500', 'py-2', 'px-4', 'rounded', 'hover:bg-green-400', 'transition'], type="submit")= 'Register'
-    
+                    button(class=['bg-green-500', 'py-2', 'px-4', 'rounded', 'hover:bg-green-400', 'transition', 'text-white'], type="submit")= 'Register'
+        .bg-white.justify-self-stretch.rounded.shadow-md
+            
+                
 
 block includeScript 
     script(src="/admin-fe.js", defer) 

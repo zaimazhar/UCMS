@@ -43,6 +43,24 @@ router.get('/', async (req, res) => {
     })
 })
 
+router.get('/courses', async (req, res) => {
+    res.render('admin/course', {
+        title: 'Courses'
+    })
+})
+
+router.get('/appeal', async (req, res) => {
+    res.render('admin/appeal', {
+        title: 'Course Appeal'
+    })
+})
+
+router.get('/exemption', async (req, res) => {
+    res.render('admin/exemption', {
+        title: 'Exemption'
+    })
+})
+
 router.get('/:uid/user', async (req, res) => {
     const user = res.locals.user
     const userProfile = await firebase.auth().getUser(req.params.uid)
@@ -57,27 +75,18 @@ router.post('/role', async (req, res) => {
     const { uid, role } = req.body
     const giveRole = role === 'admin' ? { admin: true } : { student: true }
     
-    await firebase.auth().setCustomUserClaims(uid, giveRole)
-
-    console.log(uid)
-    console.log(role)
-    firebase.auth().getUser(uid).then( user => {
-        console.log(user)
-    }).catch( err => console.log(err))
+    firebase.auth().setCustomUserClaims(uid, giveRole)
+    .then( claim => {
+        res.redirect(`/`)
+    })
+    .catch( err => console.log(err))
 })
 
-router.get('/user', async (req, res) => {    
-    const user = {
-        email: 'coczerscoc@gmail.com',
-        emailVerified: false,
-        phoneNumber: '+601164134712',
-        password: 'zaimzaim1',
-        displayName: 'Zaim Student 2',
-        disabled: false,
-    }
-    const createdUser = await firebase.auth().createUser(user)
-
-    console.log(createdUser)
+router.post('/user', async (req, res) => {
+    const user = { ...req.body, ...{ emailVerified: false, disabled: false } }  
+    firebase.auth().createUser(user).then( user => {
+        res.redirect('/')
+    }).catch( err => console.log(err))
 })
 
 module.exports = router

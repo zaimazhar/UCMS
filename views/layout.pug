@@ -15,15 +15,17 @@ html(lang="en")
                 img(src="/logo.png", alt="", width="600px")
             if user.uid
                 nav.bg-white.shadow
-                    .container.flex
-                        a(href="/")= "Home" 
+                    .container.flex.text-white.p-3.justify-end
                         if user.admin
-                            a(href="/admin")= "Dashaboard"
+                            a(href="/admin", class=['bg-green-500', 'm-1', 'p-3', 'rounded', 'shadow', 'hover:bg-green-400', 'transition'])= "Dashaboard"
+                            a(href="/admin/courses", class=['bg-green-500', 'm-1', 'p-3', 'rounded', 'shadow', 'hover:bg-green-400', 'transition'])= "Courses"
+                            a(href="/admin/appeal", class=['bg-green-500', 'm-1', 'p-3', 'rounded', 'shadow', 'hover:bg-green-400', 'transition'])= "Credit Hour Appeals"
+                            a(href="/admin/exemption", class=['bg-green-500', 'm-1', 'p-3', 'rounded', 'shadow', 'hover:bg-green-400', 'transition'])= "Exemption"
                         else 
-                            a(href="/student")= "Dashboard"
-                        a(href="/sessionEnd").btn.btn-red= "Log Out"
+                            a(href="/student", class=['bg-green-500', 'm-1', 'p-3', 'rounded', 'shadow', 'hover:bg-green-400', 'transition'])= "Dashboard"
+                        a(href="/sessionEnd", class=['bg-red-500', 'm-1', 'p-3', 'rounded', 'shadow', 'hover:bg-red-400', 'transition'])= "Log Out"
 
-            .bg-gray-300.rounded-md.my-3.p-4
+            .bg-gray-300.rounded-md.my-3.p-4.px-10
                 block content 
             .bg-gray-300.rounded-md.my-3.p-4
                 footer 

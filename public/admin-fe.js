@@ -1,9 +1,15 @@
 const form = document.querySelector("form")
-const uid = document.querySelector("#uid")
-const role = document.querySelector("#role")
+const email = document.querySelector("#email")
+const password = document.querySelector("#password")
+const displayName = document.querySelector("#displayname")
+const phoneNumber = document.querySelector("#phone")
 
 form.addEventListener('submit', e => {
     e.preventDefault()
-    // giveRole(uid.value, role.value)
-    console.log(role)
+    createUser({
+        email: email.value, 
+        password: password.value, 
+        displayName: displayName.value, 
+        phoneNumber: phoneNumber.value
+    })
 })
