@@ -7,20 +7,60 @@ function getUser(session) {
 }
 
 const auth = async (req, res, next) => {
-    if(req.cookies.session) {
-        res.locals.user = await getUser(req.cookies.session)
-        next()
+    if(!req.cookies.session) {
+        console.log("Not authenticated")
+        res.redirect('/')
     } else {
-        console.log("NOOOO !!!!")
-        res.redirect('../')
+        const user = await getUser(req.cookies.session)
+        res.locals.user = user
+        if(user.student) {
+            res.locals.user = user
+            next()
+        } else {
+            console.log("Not a student")
+            res.redirect('/')
+        }
     }
 }
 
-router.get('/', auth, async (req, res) => {
+router.use(auth)
+
+router.get('/', async (req, res) => {
     const user = res.locals.user
-    res.render('client/client', {
+    res.render('student/student', {
         title: 'Student Dashboard',
         user
+    })
+})
+
+router.get('/apply', async (req, res) => {
+    const user = res.locals.user
+    res.render('student/apply', {
+        title: 'Course Application',
+        courses: [{ 
+            id: 'o8Z3vTih5RnWyvj4wZlN',
+            name: 'Software Engineering', 
+            credit: 3,
+            code: 'ABC123'
+        }, {
+            id: 'Qg0SMZajXjHd8xWvFlVe',
+            name: 'Database Management',
+            credit: 4,
+            code: 'BAC123'
+        }, {
+            id: 'qlGGCPcKYzDOIFQqGrGI',
+            name: 'Cloud Computing',
+            credit: 4,
+            code: 'CCC123'
+        }],
+        user
+    })
+})
+
+router.get('/exempt', async (req, res) => {
+    const user = res.locals.user
+    res.render('student/exempt', {
+        title: 'Exemption'
     })
 })
 

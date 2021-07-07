@@ -1,7 +1,29 @@
 extend ../layout.pug
 
 block content 
-
+    .bg-white.p-5.rounded.shadow-xl 
+        table.w-full.text-center
+            thead 
+                tr 
+                    th
+                        p= 'Student Name'
+                    th
+                        p= 'Subject'
+                    th
+                        p= 'Grade'
+                    th 
+                        p= 'Action'
+            tbody 
+                tr 
+                    td.p-4 
+                        p= 'Muhammad Zaim'
+                    td 
+                        p= 'Cloud Computing'
+                    td 
+                        p= 'C'
+                    td 
+                        a(href="/admin/exempt/ididid/accept", class=['bg-green-500', 'hover:bg-green-300', 'transition', 'py-2', 'px-4', 'rounded', 'm-1'])= 'Accept'
+                        a(href="/admin/exempt/ididid/accept", class=['bg-red-500', 'hover:bg-red-300', 'transition', 'py-2', 'px-4', 'rounded', 'm-1'])= 'Reject'
 
 block includeScript 
     

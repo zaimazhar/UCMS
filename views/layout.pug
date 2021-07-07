@@ -12,7 +12,7 @@ html(lang="en")
     body.bg-gray-700
         div.container.mx-auto.px-4.m-4
             .bg-gray-300.rounded-md.my-4.flex.items-center.justify-center.py-5
-                img(src="/logo.png", alt="", width="600px")
+                p.text-4xl= 'UCMS'
             if user.uid
                 nav.bg-white.shadow
                     .container.flex.text-white.p-3.justify-end
@@ -23,13 +23,14 @@ html(lang="en")
                             a(href="/admin/exemption", class=['bg-green-500', 'm-1', 'p-3', 'rounded', 'shadow', 'hover:bg-green-400', 'transition'])= "Exemption"
                         else 
                             a(href="/student", class=['bg-green-500', 'm-1', 'p-3', 'rounded', 'shadow', 'hover:bg-green-400', 'transition'])= "Dashboard"
+                            a(href="/student/apply", class=['bg-green-500', 'm-1', 'p-3', 'rounded', 'shadow', 'hover:bg-green-400', 'transition'])= "Courses"
+                            a(href="/student/exempt", class=['bg-green-500', 'm-1', 'p-3', 'rounded', 'shadow', 'hover:bg-green-400', 'transition'])= "Exemption"
                         a(href="/sessionEnd", class=['bg-red-500', 'm-1', 'p-3', 'rounded', 'shadow', 'hover:bg-red-400', 'transition'])= "Log Out"
 
             .bg-gray-300.rounded-md.my-3.p-4.px-10
                 block content 
             .bg-gray-300.rounded-md.my-3.p-4
                 footer 
-                    p.text-xl= 'My footer! using PUG!'
-                    h3= 'No, really. We use Pug.'
+                    p.text-xl.text-center= 'UCMS'
         block includeScript 
         

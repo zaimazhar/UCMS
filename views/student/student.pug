@@ -1,0 +1,16 @@
+extend ../layout.pug
+
+block content 
+    input(type="hidden", id="uid")
+    .content 
+    div(class=['grid', 'md:grid-cols-2', 'gap-3','sm:grid-cols-1', 'justify-items-center', 'place-content-center'])
+        div.bg-white.p-5.rounded.text-center
+            p.text-xl.mb-5= 'Your Application'
+            //- a(href='/student/apply').text-2xl.text-green-500.underline= 'Accepted'
+            //- a(href='/student/apply').text-2xl.text-red-500.underline= 'Rejected'
+            a(href='/student/apply').text-2xl.text-yellow-500.underline= 'Pending'
+        div.bg-white.p-5.rounded.text-center
+            p.text-xl.mb-5= 'Exemption Status'
+            a(href='/student/exempt').text-2xl.text-red-500.underline= 'Rejected'
+    
+block includeScript 

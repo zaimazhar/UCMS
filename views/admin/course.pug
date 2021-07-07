@@ -1,25 +1,41 @@
 extend ../layout.pug
 
-block content 
-    form(method="post") 
-        input(type="text", id="courses")
-        br
-        label(for="course1")= "Software Engineering"
-        input(type="checkbox", id="course1", name="courses", value="software-engineering")
-        br
-        label(for="course2")= "Database Management" 
-        input(type="checkbox", id="course2", name="courses", value="database-management")
-        br
-        label(for="course3")= "Frontend" 
-        input(type="checkbox", id="course3", name="courses", value="frontend")
-        br
-        label(for="course4")= "Backend" 
-        input(type="checkbox", id="course4", name="courses", value="backend")
-        br
-        label(for="course5")= "Server Infrastructure" 
-        input(type="checkbox", id="course5", name="courses", value="server-infrastructure")
-        br
-        button(type="submit", class=['bg-green-500', 'rounded', 'shadow', 'p-3', 'hover:bg-green-400', 'transition'])= "Submit"
+block content
+    .grid.grid-cols-2.gap-4
+        form.my-4.bg-white.shadow-xl.rounded
+            div.grid.grid-cols-2.justify-items-center.m-3
+                label(for="cname").align-top= 'Course Name'
+                input(type="text", id="cname", class=['rounded', 'border-2', 'focus:border-green-500', 'outline-none'], required)
+            div.grid.grid-cols-2.justify-items-center.m-3 
+                label(for="ccode").align-top= 'Course Code'
+                input(type="text", id="ccode", class=['rounded', 'border-2', 'focus:border-green-500', 'outline-none'], required)
+            div.grid.grid-cols-2.justify-items-center.m-3
+                label(for="ccredit").align-top= 'Course Credit'
+                input(type="number", id="ccredit", class=['rounded', 'border-2', 'focus:border-green-500', 'outline-none'], required)
+            div.text-center.my-4
+                button(class=['w-3/4', 'bg-green-500', 'rounded', 'px-4', 'py-2', 'hover:bg-green-300', 'transition'])= 'Add Course'
+        .bg-white.p-4.rounded.shadow-xl
+            table.w-full.text-center
+                thead.border-b-2 
+                    th 
+                        p= 'Subject'
+                    th 
+                        p= 'Code'
+                    th 
+                        p= 'Credit'
+                    th 
+                        p= 'Action'
+                tbody 
+                    each course in courses
+                        tr.border-b-2 
+                            td 
+                                p= course.name
+                            td 
+                                p= course.code
+                            td 
+                                p= course.credit
+                            td.p-4 
+                                a(href="/admin/course/idididid/delete", class=['bg-red-500', 'px-4', 'py-2', 'rounded', 'transition', 'hover:bg-red-300'])= 'Delete'
 
 block includeScript
     script(src="/adminCourse.js", defer) 

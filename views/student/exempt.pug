@@ -1,0 +1,21 @@
+extend ../layout.pug
+
+block content 
+    .text-center 
+        .bg-white.p-5 
+            if status 
+                p= 'Already inserted exemption!'
+            else 
+                form.mb-3
+                    div 
+                        span.mr-4.align-top= 'Digital Design'
+                        select(id="grade_dd", class=['border-2', 'border-green-500', 'outline-none', 'rounded', 'focus:border-gray-500', 'w-24'])
+                            option(value="a")= 'A'
+                            option(value="b")= 'B'
+                            option(value="c")= 'C'
+                            option(value="d")= 'D'
+                button.bg-green-500.px-3.py-2.rounded.mt-3= 'Submit'
+                 
+
+block includeScript
+    script(src="/studentExempt.js") 

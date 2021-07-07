@@ -1,0 +1,26 @@
+extend ../layout.pug
+
+block content 
+    .bg-white.p-5
+        p.text-2xl= `${user.name} (${user.email})`
+        .text-center
+            div(id='err', hidden).text-red-500.text-xl= 'Select a Course'
+            div(id='appeal', hidden)
+                textarea(id='appeal').border-2.border-green-500.rounded
+            if status 
+                p.text-green-500= 'Accepted'
+                p.text-red-500= 'Rejected'
+            else 
+                form 
+                    each course, i in courses 
+                        label.inline-flex.items-center.mt-3
+                            input(type="checkbox", data-credit=course.credit, value=course.id).form-checkbox.h-5.w-5.text-blue-600
+                            span.ml-2.text-gray-700= `${course.code} - ${course.name} (${course.credit} credit hours)`
+                        br
+                            //- label.flex.items-center
+                            //-     input(type="checkbox", id=i, value=course.id).form-checkbox
+                            //-     span.ml-2= `${course.code} - ${course.name}`
+                    button(id="submit").bg-green-500.p-3.rounded.m-3= 'Submit'
+
+block includeScript 
+    script(src="/studentCourse.js", defer) 

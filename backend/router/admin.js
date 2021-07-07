@@ -44,8 +44,10 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/courses', async (req, res) => {
+    const courses = (await firebase.firestore().collection('courses').get()).docs.map(course => course.data())
     res.render('admin/course', {
-        title: 'Courses'
+        title: 'Courses',
+        courses
     })
 })
 
