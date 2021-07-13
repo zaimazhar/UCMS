@@ -5,13 +5,13 @@ block content
         form.my-4.bg-white.shadow-xl.rounded
             div.grid.grid-cols-2.justify-items-center.m-3
                 label(for="cname").align-top= 'Course Name'
-                input(type="text", id="cname", class=['rounded', 'border-2', 'focus:border-green-500', 'outline-none'], required)
+                input(type="text", id="cname", class=['rounded', 'border-2', 'focus:border-green-500', 'outline-none', 'px-2', 'py-1'], required)
             div.grid.grid-cols-2.justify-items-center.m-3 
                 label(for="ccode").align-top= 'Course Code'
-                input(type="text", id="ccode", class=['rounded', 'border-2', 'focus:border-green-500', 'outline-none'], required)
+                input(type="text", id="ccode", class=['rounded', 'border-2', 'focus:border-green-500', 'outline-none', 'px-2', 'py-1'], required)
             div.grid.grid-cols-2.justify-items-center.m-3
                 label(for="ccredit").align-top= 'Course Credit'
-                input(type="number", id="ccredit", class=['rounded', 'border-2', 'focus:border-green-500', 'outline-none'], required)
+                input(type="number", id="ccredit", class=['rounded', 'border-2', 'focus:border-green-500', 'outline-none', 'px-2', 'py-1'], required)
             div.text-center.my-4
                 button(class=['w-3/4', 'bg-green-500', 'rounded', 'px-4', 'py-2', 'hover:bg-green-300', 'transition'])= 'Add Course'
         .bg-white.p-4.rounded.shadow-xl
@@ -35,7 +35,7 @@ block content
                             td 
                                 p= course.credit
                             td.p-4 
-                                a(href="/admin/course/idididid/delete", class=['bg-red-500', 'px-4', 'py-2', 'rounded', 'transition', 'hover:bg-red-300'])= 'Delete'
+                                button(onclick=`deleteCourse('${course.id}')`, class=['bg-red-500', 'px-4', 'py-2', 'rounded', 'transition', 'hover:bg-red-300'])= 'Delete'
 
 block includeScript
     script(src="/adminCourse.js", defer) 

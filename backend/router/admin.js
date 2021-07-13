@@ -44,7 +44,7 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/courses', async (req, res) => {
-    const courses = (await firebase.firestore().collection('courses').get()).docs.map(course => course.data())
+    const courses = (await firebase.firestore().collection('courses').get()).docs.map(course => Object.assign(course.data(), { id: course.id }))
     res.render('admin/course', {
         title: 'Courses',
         courses
@@ -89,6 +89,26 @@ router.post('/user', async (req, res) => {
     firebase.auth().createUser(user).then( user => {
         res.redirect('/')
     }).catch( err => console.log(err))
+})
+
+router.post('/course/add', async (req, res) => {
+    const user = res.locals.user
+    firebase.firestore().collection('courses').add({
+        name: req.body.name,
+        code: req.body.code,
+        credit: parseInt(req.body.credit)
+    })
+
+    res.redirect(301, '/admin/courses')
+})
+
+router.post('/course/:id/delete', async (req, res) => {
+    const user = res.locals.user
+    firebase.firestore().collection('courses').doc(req.params.id).delete().then( () => {
+        console.log("Course Deleted")
+    }).catch( err => console.log(err))
+
+    res.json({ content: 'Success' })
 })
 
 module.exports = router
