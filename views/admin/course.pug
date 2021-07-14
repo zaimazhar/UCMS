@@ -25,17 +25,17 @@ block content
                         p= 'Credit'
                     th 
                         p= 'Action'
-                tbody 
-                    each course in courses
-                        tr.border-b-2 
-                            td 
-                                p= course.name
-                            td 
-                                p= course.code
-                            td 
-                                p= course.credit
-                            td.p-4 
-                                button(onclick=`deleteCourse('${course.id}')`, class=['bg-red-500', 'px-4', 'py-2', 'rounded', 'transition', 'hover:bg-red-300'])= 'Delete'
+                tbody(id='showCourses') 
+                    //- each course in courses
+                    //-     tr.border-b-2 
+                    //-         td 
+                    //-             p= course.name
+                    //-         td 
+                    //-             p= course.code
+                    //-         td 
+                    //-             p= course.credit
+                    //-         td.p-4 
+                    //-             button(onclick=`deleteCourse('${course.id}')`, class=['bg-red-500', 'px-4', 'py-2', 'rounded', 'transition', 'hover:bg-red-300'])= 'Delete'
 
 block includeScript
     script(src="/adminCourse.js", defer) 

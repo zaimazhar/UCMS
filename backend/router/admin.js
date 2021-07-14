@@ -14,7 +14,6 @@ function getAllUser() {
 
 const checkAuth = async (req, res, next) => {
     if(!req.cookies.session) {
-        console.log("Not authenticated")
         res.redirect('/')
     } else {
         const user = await getUser(req.cookies.session)
@@ -23,7 +22,6 @@ const checkAuth = async (req, res, next) => {
             res.locals.user = user
             next()
         } else {
-            console.log("Not an admin")
             res.redirect('/')
         }
     }
@@ -34,7 +32,7 @@ router.use(checkAuth)
 router.get('/', async (req, res) => {
     const user = res.locals.user
     const users =await getAllUser()
-    users.map(use => console.log(use.customClaims))
+    // users.map(use => console.log(use.customClaims))
     res.render('admin/admin', { 
         title: 'UCMS Admin',
         users: users,
@@ -44,10 +42,10 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/courses', async (req, res) => {
-    const courses = (await firebase.firestore().collection('courses').get()).docs.map(course => Object.assign(course.data(), { id: course.id }))
+    // const courses = (await firebase.firestore().collection('courses').get()).docs.map(course => Object.assign(course.data(), { id: course.id }))
     res.render('admin/course', {
         title: 'Courses',
-        courses
+        // courses
     })
 })
 
@@ -81,34 +79,25 @@ router.post('/role', async (req, res) => {
     .then( claim => {
         res.redirect(`/`)
     })
-    .catch( err => console.log(err))
 })
 
 router.post('/user', async (req, res) => {
     const user = { ...req.body, ...{ emailVerified: false, disabled: false } }  
     firebase.auth().createUser(user).then( user => {
         res.redirect('/')
-    }).catch( err => console.log(err))
+    })
 })
 
 router.post('/course/add', async (req, res) => {
-    const user = res.locals.user
     firebase.firestore().collection('courses').add({
         name: req.body.name,
         code: req.body.code,
         credit: parseInt(req.body.credit)
     })
-
-    res.redirect(301, '/admin/courses')
 })
 
 router.post('/course/:id/delete', async (req, res) => {
-    const user = res.locals.user
-    firebase.firestore().collection('courses').doc(req.params.id).delete().then( () => {
-        console.log("Course Deleted")
-    }).catch( err => console.log(err))
-
-    res.json({ content: 'Success' })
+    firebase.firestore().collection('courses').doc(req.params.id).delete()
 })
 
 module.exports = router
