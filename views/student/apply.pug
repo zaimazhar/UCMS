@@ -2,11 +2,11 @@ extend ../layout.pug
 
 block content 
     .bg-white.p-5
-        p.text-2xl= `${user.name} (${user.email})`
+        p(class=['text-2xl', 'm-4', 'sm:text-center', 'md:text-left']).text-2xl.m-4= `${user.name}`
         .text-center
             div(id='err', hidden).text-red-500.text-xl= 'Select a Course'
-            div(id='appeal', hidden)
-                textarea(id='appeal').border-2.border-green-500.rounded
+            div(id='appeal', hidden).mt-5
+                textarea(placeholder='Fill Your Appeal', id='appealInput', cols='40', class=['p-2', 'border-2', 'border-gray-500', 'focus:border-green-500', 'rounded', 'outline-none'])
             if status 
                 p.text-green-500= 'Accepted'
                 p.text-red-500= 'Rejected'
@@ -20,7 +20,7 @@ block content
                             //- label.flex.items-center
                             //-     input(type="checkbox", id=i, value=course.id).form-checkbox
                             //-     span.ml-2= `${course.code} - ${course.name}`
-                    button(id="submit").bg-green-500.p-3.rounded.m-3= 'Submit'
+                button(id="submit", onclick=`submitApply('${user.uid}')`).bg-green-500.p-3.rounded.m-3= 'Submit'
 
 block includeScript 
     script(src="/studentCourse.js", defer) 

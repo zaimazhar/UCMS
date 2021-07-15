@@ -35,32 +35,40 @@ router.get('/', async (req, res) => {
 
 router.get('/apply', async (req, res) => {
     const user = res.locals.user
-    res.render('student/apply', {
-        title: 'Course Application',
-        courses: [{ 
-            id: 'o8Z3vTih5RnWyvj4wZlN',
-            name: 'Software Engineering', 
-            credit: 3,
-            code: 'ABC123'
-        }, {
-            id: 'Qg0SMZajXjHd8xWvFlVe',
-            name: 'Database Management',
-            credit: 4,
-            code: 'BAC123'
-        }, {
-            id: 'qlGGCPcKYzDOIFQqGrGI',
-            name: 'Cloud Computing',
-            credit: 4,
-            code: 'CCC123'
-        }],
-        user
-    })
+    console.log(user.uid)
+
+    const data = (await firebase.firestore().collection("submissions").where("userId", "==", user.uid).where("status", "!=", "rejected").get()).docs
+
+    if(data.length > 0) {
+        res.render('student/apply', {
+            status: true,
+            title: 'Course Application',
+            user,
+            courses: data.map(query => query.data().status)
+        })
+    } else {
+        const courses = (await firebase.firestore().collection('courses').get()).docs.map(course => Object.assign(course.data(), { id: course.id }))
+    
+        res.render('student/apply', {
+            title: 'Course Application',
+            courses,
+            user,
+            status: false
+        })
+    }
 })
 
 router.get('/exempt', async (req, res) => {
     const user = res.locals.user
     res.render('student/exempt', {
         title: 'Exemption'
+    })
+})
+
+router.post('/apply', async (req, res) => {
+    const user = res.locals.user
+    db.collection('submissions').add({
+
     })
 })
 
