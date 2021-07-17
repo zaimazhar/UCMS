@@ -19,15 +19,21 @@ function submitApply(uid) {
                 return
             } else {
                 checkboxes.forEach(box => {
-                    arrayData.push(box.value)
+                    arrayData.push({
+                        name: box.getAttribute('data-name'),
+                        credit: parseInt(box.getAttribute('data-credit')),
+                        code: box.value,
+                    })
                 })
-
+    
                 fetch('/student/apply', {
                     method: 'POST',
                     body: JSON.stringify({
                         userId: uid,
                         courses: arrayData,
-                        appeal: appeal.value
+                        appealStatus: true,
+                        status: "pending",
+                        exceedCreditAppeal: text.value
                     }),
                     headers: {
                         Accept: 'application/json',
@@ -36,9 +42,17 @@ function submitApply(uid) {
                 })
             }
         } else {
+            if(!appeal.hidden) appeal.hidden = true
+
             checkboxes.forEach(box => {
-                arrayData.push(box.value)
+                arrayData.push({
+                    name: box.getAttribute('data-name'),
+                    credit: parseInt(box.getAttribute('data-credit')),
+                    code: box.value,
+                })
             })
+
+            console.log(arrayData)
         }
     }
 }

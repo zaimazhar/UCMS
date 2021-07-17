@@ -27,9 +27,13 @@ router.use(auth)
 
 router.get('/', async (req, res) => {
     const user = res.locals.user
+    const applicationSubmission = (await firebase.firestore().collection("status").where("userId", "==", user.uid).get()).docs[0].data()
+    console.log(applicationSubmission)
     res.render('student/student', {
         title: 'Student Dashboard',
-        user
+        user,
+        applicationSubmission: applicationSubmission.submission,
+        exemptionSubmission: applicationSubmission.exemption
     })
 })
 
@@ -67,9 +71,7 @@ router.get('/exempt', async (req, res) => {
 
 router.post('/apply', async (req, res) => {
     const user = res.locals.user
-    db.collection('submissions').add({
-
-    })
+    firebase.firestore().collection('submissions').add(req.body)
 })
 
 module.exports = router

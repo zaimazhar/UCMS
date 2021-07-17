@@ -73,6 +73,15 @@ router.get('/:uid/user', async (req, res) => {
 
 router.post('/role', async (req, res) => { 
     const { uid, role } = req.body
+
+    if(role === 'student') {
+        firebase.firestore().collection("status").add({
+            userId: uid,
+            submission: "",
+            exemption: "",
+        })
+    }
+
     const giveRole = role === 'admin' ? { admin: true } : { student: true }
     
     firebase.auth().setCustomUserClaims(uid, giveRole)
