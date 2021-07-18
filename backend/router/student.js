@@ -41,14 +41,14 @@ router.get('/apply', async (req, res) => {
     const user = res.locals.user
     console.log(user.uid)
 
-    const data = (await firebase.firestore().collection("submissions").where("userId", "==", user.uid).where("status", "!=", "rejected").get()).docs
+    const data = (await firebase.firestore().collection("submissions").where("userId", "==", user.uid).where("status", "!=", "rejected").get()).docs[0].data()
 
-    if(data.length > 0) {
+    if(data) {
         res.render('student/apply', {
             status: true,
             title: 'Course Application',
             user,
-            courses: data.map(query => query.data().status)
+            courses: data
         })
     } else {
         const courses = (await firebase.firestore().collection('courses').get()).docs.map(course => Object.assign(course.data(), { id: course.id }))

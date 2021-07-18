@@ -8,8 +8,27 @@ block content
             div(id='appeal', hidden).mt-5
                 textarea(placeholder='Fill Your Appeal', id='appealInput', cols='40', class=['p-2', 'border-2', 'border-gray-500', 'focus:border-green-500', 'rounded', 'outline-none'])
             if status 
-                p.text-green-500= 'Accepted'
-                p.text-red-500= 'Rejected'
+                div(id='submissionStatus', class=['bg-white', 'p-4', 'text-center'])
+                span.text-2xl= 'Status: '
+                if courses.status === "pending"
+                    span.text-2xl.text-yellow-600.mb-4= 'Pending'
+                else if courses.status === "approved"
+                    span.text-xl.text-green-600= 'Approved'
+                else 
+                    span= ''
+                div.flex.justify-center.items-center.mt-4
+                    table(style="border-spacing: 0 10px;").table.border-separate
+                        thead.bg-gray-500.rounded-3xl.text-white
+                            tr
+                                th(style="border-radius: .625rem 0 0 .625rem;").p-5 Code
+                                th.p-5 Credit
+                                th(style="border-radius: 0 .625rem .625rem 0;").p-5 Course Name
+                        tbody.bg-gray-800.text-white 
+                            for course in courses.courses 
+                                tr
+                                    td(style="border-radius: .625rem 0 0 .625rem;").p-4= course.code
+                                    td= course.credit
+                                    td(style="border-radius: 0 .625rem .625rem 0;").p-4= course.name
             else 
                 form 
                     each course, i in courses 
