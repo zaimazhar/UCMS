@@ -8,9 +8,9 @@ block content
             p.text-xl.mb-5= 'Your Application'
             if applicationSubmission === 'pending' 
                 a(href='/student/apply').text-2xl.text-yellow-500.underline= 'Pending'
-            else if application === 'approved'
-                a(href='/student/apply').text-2xl.text-green-500.underline= 'Accepted'
-            else if application === 'rejected'
+            else if applicationSubmission === 'approved'
+                a(href='/student/apply').text-2xl.text-green-500.underline= 'Approved'
+            else if applicationSubmission === 'rejected'
                 a(href='/student/apply').text-2xl.text-red-500.underline= 'Rejected'
             else 
                 p.text-2xl.underline= ''
@@ -19,11 +19,10 @@ block content
             if exemptionSubmission === 'pending' 
                 a(href='/student/exempt').text-2xl.text-yellow-500.underline= 'Pending'
             else if exemptionSubmission === 'approved'
-                a(href='/student/exempt').text-2xl.text-green-500.underline= 'Accepted'
+                a(href='/student/exempt').text-2xl.text-green-500.underline= 'Approved'
             else if exemptionSubmission === 'rejected'
                 a(href='/student/exempt').text-2xl.text-red-500.underline= 'Rejected'
             else 
                 p.text-2xl.underline= ''
-            
     
 block includeScript 

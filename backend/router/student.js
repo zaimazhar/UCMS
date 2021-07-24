@@ -27,8 +27,8 @@ router.use(auth)
 
 router.get('/', async (req, res) => {
     const user = res.locals.user
-    const applicationSubmission = (await firebase.firestore().collection("status").where("userId", "==", user.uid).get()).docs[0].data()
-    console.log(applicationSubmission)
+    const applicationSubmission = (await firebase.firestore().collection('status').doc(user.uid).get()).data() ?? { submission: '', exemption: ''}
+    
     res.render('student/student', {
         title: 'Student Dashboard',
         user,
@@ -39,11 +39,14 @@ router.get('/', async (req, res) => {
 
 router.get('/apply', async (req, res) => {
     const user = res.locals.user
+    const db = firebase.firestore()
     console.log(user.uid)
 
-    const data = (await firebase.firestore().collection("submissions").where("userId", "==", user.uid).where("status", "!=", "rejected").get()).docs[0].data()
-
-    if(data) {
+    const exemptionStatus = await db.collection("exemption").where("userId", "==", user.uid).where("status", "==", "approved").get()
+    
+    const data = await (await db.collection("submissions").doc(user.uid).get()).data()
+    
+    if(data && data.status !== "rejected") {
         res.render('student/apply', {
             status: true,
             title: 'Course Application',
@@ -51,8 +54,12 @@ router.get('/apply', async (req, res) => {
             courses: data
         })
     } else {
-        const courses = (await firebase.firestore().collection('courses').get()).docs.map(course => Object.assign(course.data(), { id: course.id }))
-    
+        let courses = (await db.collection('courses').get()).docs.map(course => Object.assign(course.data(), { id: course.id }))
+
+        if(!exemptionStatus.empty) {
+            courses = courses.filter(course => !course.id.includes(exemptionStatus.docs[0].data().courses))
+        }
+        
         res.render('student/apply', {
             title: 'Course Application',
             courses,
@@ -64,14 +71,74 @@ router.get('/apply', async (req, res) => {
 
 router.get('/exempt', async (req, res) => {
     const user = res.locals.user
-    res.render('student/exempt', {
-        title: 'Exemption'
-    })
+    const db = firebase.firestore()
+
+    if((await db.collection('exemption').where('userId', '==', user.uid).get()).empty) {
+        const courses = await (await db.collection('courses').where('exemption', '==', true).get()).docs.map(course => Object.assign(course.data(), { id: course.id }))
+    
+        res.render('student/exempt', {
+            title: 'Exemption',
+            courses,
+            status: false
+        })
+    } else {
+        res.render('student/exempt', {
+            title: 'Exemption',
+            status: true
+        })
+    }
+
 })
 
 router.post('/apply', async (req, res) => {
     const user = res.locals.user
-    firebase.firestore().collection('submissions').add(req.body)
+    const db = firebase.firestore()
+    const batch = db.batch()
+    
+    if(req.body.appealStatus) {
+        db.collection('status').doc(user.uid).set({
+            submission: "pending"
+        }, { merge: true })
+    } else {
+        db.collection('status').doc(user.uid).set({
+            submission: "approved"
+        }, { merge: true })
+    }
+    
+    db.collection('submissions').doc(user.uid).set(req.body)
+    
+    batch.commit()
+
+    res.send({ message: 'Success'})
+})
+
+router.post('/exempt', async (req, res) => {
+    const user = res.locals.user
+    const data = req.body
+    let courses = []
+    let grades = []
+
+    data.forEach(see => {
+        courses.push(see.id)
+        grades.push(see.value)
+    })
+
+    const batch = firebase.firestore().batch()
+
+    firebase.firestore().collection('exemption').add({
+        userId: user.uid,
+        status: "pending",
+        courses,
+        grades
+    })
+
+    firebase.firestore().collection('status').doc(user.uid).set({
+        exemption: "pending"
+    }, { merge: true })
+
+    batch.commit()
+
+    res.send({message: 'Success'})
 })
 
 module.exports = router

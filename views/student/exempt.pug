@@ -4,17 +4,20 @@ block content
     .text-center 
         .bg-white.p-5 
             if status 
-                p= 'Already inserted exemption!'
+                p.text-3xl= 'Already inserted exemption!'
             else 
+                p.text-2xl.m-5= "The exemption form is ONE time submission, please insert your grade carefully."
+                br
                 form.mb-3
-                    div 
-                        span.mr-4.align-top= 'Digital Design (ABC123)'
-                        select(id="grade_dd", class=['border-2', 'border-green-500', 'outline-none', 'rounded', 'focus:border-gray-500', 'w-24'])
-                            option(value="a")= 'A'
-                            option(value="b")= 'B'
-                            option(value="c")= 'C'
-                            option(value="d")= 'D'
-                button.bg-green-500.px-3.py-2.rounded.mt-3= 'Submit'
+                    each course, index in courses 
+                        div.m-4 
+                            span.mr-4.align-top= course.name
+                            select(data-course=course.id, class=['border-2', 'border-green-500', 'outline-none', 'rounded', 'focus:border-gray-500', 'w-24'])
+                                option(value="A")= 'A'
+                                option(value="B")= 'B'
+                                option(value="C")= 'C'
+                                option(value="D")= 'D'
+                button(id='submit').bg-green-500.px-3.py-2.rounded.mt-3= 'Submit'
                  
 
 block includeScript

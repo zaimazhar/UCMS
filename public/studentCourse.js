@@ -39,6 +39,8 @@ function submitApply(uid) {
                         Accept: 'application/json',
                         'Content-Type': 'application/json'
                     },
+                }).then( () => {
+                    window.location.assign('/student')
                 })
             }
         } else {
@@ -52,7 +54,22 @@ function submitApply(uid) {
                 })
             })
 
-            console.log(arrayData)
+            fetch('/student/apply', {
+                method: 'POST',
+                body: JSON.stringify({
+                    userId: uid,
+                    courses: arrayData,
+                    appealStatus: false,
+                    status: "approved",
+                    exceedCreditAppeal: ""
+                }),
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+            }).then( () => {
+                window.location.assign('/student')
+            })
         }
     }
 }
