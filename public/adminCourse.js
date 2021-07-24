@@ -53,10 +53,16 @@ form.addEventListener('submit', e => {
     let name = document.querySelector('#cname').value
     let credit = document.querySelector('#ccredit').value
     let code = document.querySelector('#ccode').value
-    
+    let exemptionNode = document.querySelectorAll("input[name='exempt']:checked")
+    let exemption = false;
+
+    if(exemptionNode[0].value === "on") {
+        exemption = true
+    }
+
     fetch('/admin/course/add', {
         method: 'POST',
-        body: JSON.stringify({ name, credit, code }),
+        body: JSON.stringify({ name, credit, code, exemption }),
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json'
@@ -66,6 +72,8 @@ form.addEventListener('submit', e => {
     document.querySelector('#cname').value = ''
     document.querySelector('#ccredit').value = ''
     document.querySelector('#ccode').value = ''
+    document.querySelector('#ctrue').value = ''
+    document.querySelector('#cfalse').value = ''
 })
 
 async function deleteCourse(id) {

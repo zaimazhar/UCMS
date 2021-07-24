@@ -71,6 +71,23 @@ router.get('/:uid/user', async (req, res) => {
     })
 })
 
+router.get('/:uid/user/confirm', async (req, res) => {
+    const db = firebase.firestore()
+    const batch = db.batch()
+
+    firebase.firestore().collection('submissions').doc(req.params.uid).update({
+        status: "approved"
+    })
+
+    firebase.firestore().collection('status').doc(req.params.uid).set({
+        submission: "approved"
+    }, { merge: true })
+
+    batch.commit()
+
+    res.redirect('/admin/appeal')
+})
+
 router.post('/role', async (req, res) => { 
     const { uid, role } = req.body
 
@@ -101,7 +118,8 @@ router.post('/course/add', async (req, res) => {
     firebase.firestore().collection('courses').add({
         name: req.body.name,
         code: req.body.code,
-        credit: parseInt(req.body.credit)
+        credit: parseInt(req.body.credit),
+        exemption: req.body.exemption
     })
 })
 

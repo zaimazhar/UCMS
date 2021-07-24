@@ -4,14 +4,22 @@ block content
     .grid.grid-cols-2.gap-4
         form.my-4.bg-white.shadow-xl.rounded
             div.grid.grid-cols-2.justify-items-center.m-3
-                label(for="cname").align-top= 'Course Name'
+                label(for="cname").align-top.text-xl= 'Course Name'
                 input(type="text", id="cname", class=['rounded', 'border-2', 'focus:border-green-500', 'outline-none', 'px-2', 'py-1'], required)
             div.grid.grid-cols-2.justify-items-center.m-3 
-                label(for="ccode").align-top= 'Course Code'
+                label(for="ccode").align-top.text-xl= 'Course Code'
                 input(type="text", id="ccode", class=['rounded', 'border-2', 'focus:border-green-500', 'outline-none', 'px-2', 'py-1'], required)
             div.grid.grid-cols-2.justify-items-center.m-3
-                label(for="ccredit").align-top= 'Course Credit'
+                label(for="ccredit").align-top.text-xl= 'Course Credit'
                 input(type="number", id="ccredit", class=['rounded', 'border-2', 'focus:border-green-500', 'outline-none', 'px-2', 'py-1'], required)
+            div.grid.grid-cols.justify-items-center.m-3
+                p.text-2xl= "Exemption"
+                div
+                    label(for="ctrue").align-top.text-xl.m-2= 'Yes'
+                    input(type="radio", value="on", name="exempt", id="ctrue", class=['rounded', 'border-2', 'focus:border-green-500', 'outline-none', 'px-2', 'py-1', 'align-middle'])
+                div
+                    label(for="cfalse").align-top.text-xl.m-2= 'No'
+                    input(type="radio", value="off", name="exempt", id="cfalse", class=['rounded', 'border-2', 'focus:border-green-500', 'outline-none', 'px-2', 'py-1', 'align-middle'])
             div.text-center.my-4
                 button(class=['w-3/4', 'bg-green-500', 'rounded', 'px-4', 'py-2', 'hover:bg-green-300', 'transition'])= 'Add Course'
         .bg-white.p-4.rounded.shadow-xl
