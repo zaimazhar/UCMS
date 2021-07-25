@@ -3,7 +3,7 @@ extend ../layout.pug
 block content 
     .bg-white.p-5.rounded.shadow-xl 
         table.w-full.text-center
-            thead 
+            thead.border-b-2 
                 tr 
                     th
                         p= 'Student Name'
@@ -14,16 +14,18 @@ block content
                     th 
                         p= 'Action'
             tbody 
-                tr 
-                    td.p-4 
-                        p= 'Muhammad Zaim'
-                    td 
-                        p= 'Cloud Computing'
-                    td 
-                        p= 'C'
-                    td 
-                        a(href="/admin/exempt/ididid/accept", class=['bg-green-500', 'hover:bg-green-300', 'transition', 'py-2', 'px-4', 'rounded', 'm-1'])= 'Accept'
-                        a(href="/admin/exempt/ididid/accept", class=['bg-red-500', 'hover:bg-red-300', 'transition', 'py-2', 'px-4', 'rounded', 'm-1'])= 'Reject'
-
+                each exempt in exemptions
+                    tr.border-b-2 
+                        td.p-6 
+                            p= exempt.name
+                        td 
+                            each name in exempt.names
+                                p= name
+                        td 
+                            each grade in exempt.grades
+                                p= grade
+                        td 
+                            a(href=`/admin/${exempt.userId}/exempt/confirm`, class=['bg-green-500', 'hover:bg-green-300', 'transition', 'py-2', 'px-4', 'rounded', 'm-1'])= 'Accept'
+                            a(href=`/admin/${exempt.userId}/exempt/reject`, class=['bg-red-500', 'hover:bg-red-300', 'transition', 'py-2', 'px-4', 'rounded', 'm-1'])= 'Reject'
 block includeScript 
     

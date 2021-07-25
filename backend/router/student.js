@@ -132,10 +132,12 @@ router.post('/exempt', async (req, res) => {
     const db = firebase.firestore()
     let courses = []
     let grades = []
+    let names = []
     
     data.forEach(see => {
         courses.push(see.id)
         grades.push(see.value)
+        names.push(see.name)
     })
     
     const batch = db.batch()
@@ -144,7 +146,8 @@ router.post('/exempt', async (req, res) => {
         userId: user.uid,
         status: "pending",
         courses,
-        grades
+        grades,
+        names
     })
     
     batch.set(db.collection('status').doc(user.uid), {

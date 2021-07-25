@@ -6,9 +6,11 @@ btn.addEventListener('click', () => {
     let data = []
     selectors.forEach(selector => {
         const id = selector.dataset.course
+        const name = selector.dataset.name
         data.push({
             id,
-            value: selector.value
+            value: selector.value,
+            name
         })
     })
     

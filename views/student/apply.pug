@@ -33,7 +33,7 @@ block content
                 form 
                     each course, i in courses 
                         label.inline-flex.items-center.mt-3
-                            input(type="checkbox", data-credit=course.credit, data-name=course.name, value=course.code).form-checkbox.h-5.w-5.text-blue-600
+                            input(type="checkbox", data-id=course.id, data-credit=course.credit, data-name=course.name, value=course.code).form-checkbox.h-5.w-5.text-blue-600
                             span.ml-2.text-gray-700= `${course.code} - ${course.name} (${course.credit} credit hours)`
                         br
                             //- label.flex.items-center

@@ -12,15 +12,14 @@ block content
                     th
                         p= 'Action'
             tbody 
-                tr.text-center.border-b-2
-                    td.p-5 
-                        p= 'Zaim'
-                    td.p-5 
-                        p= 'I believe I can do it with extra credit hours. Please, I assure it.'
-                    td.p-45 
-                        a(href="/admin/appeal/idididid/accept", class=['bg-green-500', 'py-2', 'px-4', 'rounded', 'hover:bg-green-700', 'transition', 'm-1'])= 'Accept'
-                        a(href="/admin/appeal/idididid/reject", class=['bg-red-500', 'py-2', 'px-4', 'rounded', 'hover:bg-red-700', 'transition', 'm-1']).bg-red-500.py-2.px-4.rounded= 'Reject'
-                    
-
+                each submission in submissions 
+                    tr.text-center.border-b-2
+                        td.p-5 
+                            p= submission.name
+                        td.p-5 
+                            p= submission.exceedCreditAppeal
+                        td.p-45 
+                            a(href=`/admin/${submission.id}/appeal/confirm`, class=['bg-green-500', 'py-2', 'px-4', 'rounded', 'hover:bg-green-700', 'transition', 'm-1'])= 'Accept'
+                            a(href=`/admin/${submission.id}/appeal/reject`, class=['bg-red-500', 'py-2', 'px-4', 'rounded', 'hover:bg-red-700', 'transition', 'm-1']).bg-red-500.py-2.px-4.rounded= 'Reject'
 block includeScript 
     
