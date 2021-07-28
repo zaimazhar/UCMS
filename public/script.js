@@ -23,7 +23,7 @@
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({idToken})
-          })
+          }).catch( () => {})
         })
         .then( () => {
           return firebase.auth().signOut()
@@ -31,9 +31,12 @@
         .then( () => {
           return window.location.assign('/')
         })
+      }).catch( () => {
+        err1.hidden = false
+        setTimeout( () => err1.hidden = true, 5000)
       })
     } catch(err) {
-      console.log(err)
+      
     }
   }
   

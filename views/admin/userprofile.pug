@@ -1,23 +1,25 @@
 extend ../layout.pug
 
 block content 
+    p.text-2xl.font-bold= 'Give Role'
+    br
     form(method="post") 
-        .bg-white.grid.grid-cols-2.p-2
-            .font-bold 
-                p= "ID"
-            div
-                p= userProfile.uid
-            .font-bold
-                p= "Role"
-            div 
-                select(id="role")
-                    option(value="admin")= "Administrator"
-                    option(value="student")= "Student"
-            div 
-                p= 'Give role'
+        table(style="border-spacing: 0 10px;").table.border-separate
+            thead.bg-gray-500.rounded-3xl.text-white
+                tr
+                    th(style="border-radius: .625rem 0 0 .625rem;").p-5 ID
+                    th.p-5 Name
+                    th(style="border-radius: 0 .625rem .625rem 0;").p-5 Role
+            tbody.bg-gray-800.text-white 
+                tr
+                    td(style="border-radius: .625rem 0 0 .625rem;").p-4= userProfile.uid
+                    td.p-5= userProfile.displayName
+                    td(style="border-radius: 0 .625rem .625rem 0;").p-4.text-black
+                        select(id="role").rounded.p-2.outline-none
+                            option(value="admin")= "Administrator"
+                            option(value="student")= "Student"
         input(type="text", id='uid', value=userProfile.uid, hidden)
-        button(type="submit").btn= "Submit"
-        
+        button(type="submit", class=['bg-green-400', 'px-4', 'py-2', 'rounded', 'hover:bg-green-600', 'transition'])= "Submit"
 
 block includeScript
     script(src="/userprofile.js", defer) 

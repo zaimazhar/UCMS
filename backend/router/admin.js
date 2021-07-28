@@ -93,6 +93,7 @@ router.get('/exemption', async (req, res) => {
 router.get('/:uid/user', async (req, res) => {
     const user = res.locals.user
     const userProfile = await firebase.auth().getUser(req.params.uid)
+    
     res.render('admin/userprofile', {
         title: `User: ${req.params.uid}`,
         user,

@@ -9,6 +9,7 @@ block content
             p= "Already Logged In"
         else
             form(class=['bg-white', 'shadow-md', 'rounded', 'p-10', 'w-4/6']) 
+                p(id='err', hidden).text-xl.text-red-600= 'Wrong Email or Password!'
                 div 
                     label(class=['block', 'my-3', 'text-gray-700', 'text-sm', 'font-bold'], for='email')= 'Email'
                     input(type="email", id="email", class=['appearance-none', 'leading-tight','bg-gray-100', 'py-2', 'px-2', 'border-2', 'border-gray-500', 'rounded', 'focus:bg-white', 'focus:outline-none', 'focus:border-green-500', 'transition'], placeholder="Email")
