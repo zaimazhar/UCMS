@@ -21,5 +21,5 @@ btn.addEventListener('click', () => {
             Accept: 'application/json',
             'Content-Type': 'application/json'
         },
-    }).then( () => window.location.assign('/student/exempt'))
+    }).then( () => window.location.assign('/student'))
 })
